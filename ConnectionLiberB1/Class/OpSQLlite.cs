@@ -17,18 +17,23 @@ namespace ConnectionLiberB1.Class
 
         public OpSQLlite()
         {
+
+            String path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             try
             {
-                String path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 myconn = new SQLiteConnection("DataSource=" + path + "\\LiberB1\\LiberB1DB.db;");
                 myconn.Open();
 
             }
             catch (Exception ex)
             {
-                //implementar aqui um create database para o caso do banco nao existir ainda.
 
-                MessageBox.Show("Error 501 - " + ex.Message);
+                MessageBox.Show("Mensagem 901 - Nenhuma Conexão configurada. Criar nova conexão.");
+                //implementar aqui um create database para o caso do banco nao existir ainda.
+                //criando nova conexão
+                System.IO.Directory.CreateDirectory(path + "\\LiberB1");
+                SQLiteConnection.CreateFile(path + "\\LiberB1\\LiberB1DB.db");
+                SQLiteConnection myconn = new SQLiteConnection("Data Source=" + path + "\\LiberB1\\LiberB1DB.db; Version=3;");
             }
 
 
@@ -143,8 +148,6 @@ namespace ConnectionLiberB1.Class
                     MessageBox.Show("Error 502 - " + ex.Message);
                 }
             }
-
-            
         }
 
         public bool ExistConn()

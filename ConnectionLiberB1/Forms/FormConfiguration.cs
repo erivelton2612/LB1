@@ -43,7 +43,7 @@ namespace ConnectionLiberB1.Forms
                 textBoxQueueName.Text = conn.Getconfiguration(1);
                 textBoxTimeStart.Text = conn.Getconfiguration(5);
                 textBoxTimeEnd.Text = conn.Getconfiguration(6);
-                if(textBoxTimeStart.Text is null)
+                if(string.IsNullOrEmpty(textBoxTimeStart.Text))
                 {
                     checkBox1.Checked = false;
                 }

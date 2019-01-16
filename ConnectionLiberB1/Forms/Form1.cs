@@ -92,6 +92,9 @@ namespace ConnectionLiberB1.Forms
         private void button2_Click(object sender, EventArgs e)
         {
 
+            labelConnLiber.Text = String.Empty;
+
+            labelConnSAP.Refresh();
             labelConnSAP.Text = "Conectando...";
             labelConnSAP.ForeColor = Color.Gray;
             labelConnSAP.Refresh();
@@ -105,7 +108,11 @@ namespace ConnectionLiberB1.Forms
             {
                 oCompany = new SAPbobsCOM.Company();
                 oCompany.Server = textBoxServerName.Text;
+                oCompany.LicenseServer = textBoxServerName.Text;
                 oCompany.CompanyDB = textBoxDBName.Text;
+                oCompany.language = SAPbobsCOM.BoSuppLangs.ln_English;
+                oCompany.UseTrusted = false;
+
                 switch (comboBox1.Text)
                 {
                     case "dst_MSSQL": oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst_MSSQL; break;
@@ -135,7 +142,12 @@ namespace ConnectionLiberB1.Forms
                 //dst_MSSQL2014;//8
                 //dst_HANADB;//9
                 //dst_MSSQL2016;//10
-                //dst_MSSQL2017;//11
+                ////dst_MSSQL2017;//11
+                //oCompany.SLDServer = "172.16.0.4";
+                oCompany.DbUserName = textBoxDBID.Text;
+                oCompany.DbPassword = textBoxDBPass.Text;
+                oCompany.LicenseServer = "SAP-SERVER";
+
                 oCompany.UserName = textBoxSAPUser.Text;
                 oCompany.Password = textBoxSAPPass.Text;
                 oCompany.UseTrusted = true;
