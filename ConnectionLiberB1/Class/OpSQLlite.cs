@@ -34,6 +34,12 @@ namespace ConnectionLiberB1.Class
                 System.IO.Directory.CreateDirectory(path + "\\LiberB1");
                 SQLiteConnection.CreateFile(path + "\\LiberB1\\LiberB1DB.db");
                 SQLiteConnection myconn = new SQLiteConnection("Data Source=" + path + "\\LiberB1\\LiberB1DB.db; Version=3;");
+                SQLiteCommand sqlite_cmd;
+                SQLiteDataReader sqlite_datareader;
+                sqlite_cmd = myconn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT [serverName],[dbName],[dbId],[dbPass],[SapUser],[SapPass]," +
+                    "    [ConexaoLiber],[userLiber],[PassLiber],[IsValid],[PortLiber]" +
+                    "from[Connection]; ";
             }
 
 

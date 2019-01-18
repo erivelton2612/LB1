@@ -29,12 +29,12 @@ namespace ConnectionLiberB1.Forms
                 textBoxServerName.Text = conn.Getconnection(0);
                 textBoxDBName.Text = conn.Getconnection(1);
                 textBoxDBID.Text = conn.Getconnection(2);
-                textBoxDBPass.Text = Cryptography.Decrypt(conn.Getconnection(3),key);
+                textBoxDBPass.Text = Cryptography.Decrypt(conn.Getconnection(3), key);
                 textBoxSAPUser.Text = conn.Getconnection(4);
-                textBoxSAPPass.Text = Cryptography.Decrypt(conn.Getconnection(5),key);
+                textBoxSAPPass.Text = Cryptography.Decrypt(conn.Getconnection(5), key);
                 textBoxLiberEnd.Text = conn.Getconnection(6);
                 textBoxLiberUser.Text = conn.Getconnection(7);
-                textBoxPassLiber.Text = Cryptography.Decrypt(conn.Getconnection(8),key);
+                textBoxPassLiber.Text = Cryptography.Decrypt(conn.Getconnection(8), key);
                 textBoxLiberPort.Text = conn.Getconnection(10);
             }
 
@@ -49,8 +49,8 @@ namespace ConnectionLiberB1.Forms
             //textBox9.Text =  conn.ConnStatus;
             //if(conn.RetCode != 0)
             //{
-                OpSQLlite sql = new OpSQLlite();
-            
+            OpSQLlite sql = new OpSQLlite();
+
             //}
         }
 
@@ -66,7 +66,8 @@ namespace ConnectionLiberB1.Forms
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if(labelConnLiber.ForeColor == Color.Green && labelConnSAP.ForeColor == Color.Green)
+            //if (labelConnLiber.ForeColor == Color.Green && labelConnSAP.ForeColor == Color.Green)
+            if (labelConnLiber.ForeColor == Color.Green || labelConnSAP.ForeColor == Color.Green) //somente para testes - apagar linha quando estiver em producao
             {
                 OpSQLlite conn = new OpSQLlite();
                 conn.CreateConnection(textBoxServerName.Text, textBoxDBName.Text, textBoxDBID.Text, textBoxDBPass.Text,
