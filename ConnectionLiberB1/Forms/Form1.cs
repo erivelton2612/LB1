@@ -39,8 +39,6 @@ namespace ConnectionLiberB1.Forms
             }
 
             conn.CloseConnection();
-
-
         }
 
         private void connect()
@@ -66,8 +64,8 @@ namespace ConnectionLiberB1.Forms
 
         private void button4_Click(object sender, EventArgs e)
         {
-            //if (labelConnLiber.ForeColor == Color.Green && labelConnSAP.ForeColor == Color.Green)
-            if (labelConnLiber.ForeColor == Color.Green || labelConnSAP.ForeColor == Color.Green) //somente para testes - apagar linha quando estiver em producao
+            if (labelConnLiber.ForeColor == Color.Green && labelConnSAP.ForeColor == Color.Green)
+            //if (labelConnLiber.ForeColor == Color.Green || labelConnSAP.ForeColor == Color.Green) //somente para testes - apagar linha quando estiver em producao
             {
                 OpSQLlite conn = new OpSQLlite();
                 conn.CreateConnection(textBoxServerName.Text, textBoxDBName.Text, textBoxDBID.Text, textBoxDBPass.Text,
@@ -145,9 +143,9 @@ namespace ConnectionLiberB1.Forms
                 //dst_MSSQL2016;//10
                 ////dst_MSSQL2017;//11
                 //oCompany.SLDServer = "172.16.0.4";
+                //oCompany.LicenseServer = "SAP-SERVER";
                 oCompany.DbUserName = textBoxDBID.Text;
                 oCompany.DbPassword = textBoxDBPass.Text;
-                oCompany.LicenseServer = "SAP-SERVER";
 
                 oCompany.UserName = textBoxSAPUser.Text;
                 oCompany.Password = textBoxSAPPass.Text;

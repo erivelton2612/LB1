@@ -31,19 +31,11 @@ namespace ConnectionLiberB1.Class
                 MessageBox.Show("Mensagem 901 - Nenhuma Conexão configurada. Criar nova conexão.");
                 //implementar aqui um create database para o caso do banco nao existir ainda.
                 //criando nova conexão
-                System.IO.Directory.CreateDirectory(path + "\\LiberB1");
-                SQLiteConnection.CreateFile(path + "\\LiberB1\\LiberB1DB.db");
-                SQLiteConnection myconn = new SQLiteConnection("Data Source=" + path + "\\LiberB1\\LiberB1DB.db; Version=3;");
-                SQLiteCommand sqlite_cmd;
-                SQLiteDataReader sqlite_datareader;
-                sqlite_cmd = myconn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT [serverName],[dbName],[dbId],[dbPass],[SapUser],[SapPass]," +
-                    "    [ConexaoLiber],[userLiber],[PassLiber],[IsValid],[PortLiber]" +
-                    "from[Connection]; ";
+
             }
 
-
         }
+
 
         internal string Getconnection(int field)
         {
@@ -59,6 +51,7 @@ namespace ConnectionLiberB1.Class
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             sqlite_datareader.Read();
             myreader = sqlite_datareader.GetString(field);
+            sqlite_datareader.Close();
             return myreader;
 
         }
@@ -86,6 +79,7 @@ namespace ConnectionLiberB1.Class
                 //myreader = sqlite_datareader.GetString(field);
                 myreader = Convert.ToString(sqlite_datareader[field]);
             }
+            sqlite_datareader.Close();
 
             return myreader;
 
@@ -115,6 +109,7 @@ namespace ConnectionLiberB1.Class
                                  "',[IsValid] = 1";
                 try
                 {
+
                     SQLiteCommand update = new SQLiteCommand(sqlupdate, myconn);
                     update.ExecuteNonQuery();
                     MessageBox.Show("Dados de Conexão Salvos!");
@@ -172,9 +167,15 @@ namespace ConnectionLiberB1.Class
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
 
                 if (sqlite_datareader.HasRows)
+                {
+                    sqlite_datareader.Close();
                     return true;
+                }
                 else
+                {
+                    sqlite_datareader.Close();
                     return false;
+                }
             }
             catch (Exception)
             {
@@ -198,9 +199,15 @@ namespace ConnectionLiberB1.Class
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
 
                 if (sqlite_datareader.HasRows)
+                {
+                    sqlite_datareader.Close();
                     return true;
+                }
                 else
+                {
+                    sqlite_datareader.Close();
                     return false;
+                }
             }
             catch (Exception)
             {
@@ -285,7 +292,11 @@ namespace ConnectionLiberB1.Class
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
                 MessageBox.Show("Tempo:" + sqlite_datareader.GetInt32(0) * 60 * 1000 + " milissegundos!");
                 
-                return sqlite_datareader.GetInt32(0)*60*1000;
+                int x =  sqlite_datareader.GetInt32(0)*60*1000;
+
+                sqlite_datareader.Close();
+
+                return x;
             }
             catch (Exception ex)
             {

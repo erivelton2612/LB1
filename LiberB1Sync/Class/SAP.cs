@@ -108,8 +108,8 @@ namespace LiberB1Sync.Class
             catch (Exception ex)
             {
 
-                MyLogger.Log("Error 503 - " + ex.Message);
-                MessageBox.Show("Error 503 - " + ex.Message);
+                MyLogger.Log("Error 504 - " + ex.Message);
+                MessageBox.Show("Error 504 - " + ex.Message);
             }
 
         }
