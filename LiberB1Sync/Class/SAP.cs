@@ -18,6 +18,7 @@ namespace LiberB1Sync.Class
         private SQLiteConnection myconn;
         SAPbobsCOM.Company oCompany = null;
         string json = null;
+        public bool connect { get; set; }
 
         public SAP()
         {
@@ -37,12 +38,12 @@ namespace LiberB1Sync.Class
             }
             catch (Exception ex)
             {
-                MyLogger.Log("Error 502 - " + ex.Message);
-                MessageBox.Show("Error 502 - " + ex.Message);
+                MyLogger.Log("Error 509 - " + ex.Message);
+                MessageBox.Show("Error 509 - " + ex.Message);
             }
 
             sqlite_cmd = myconn.CreateCommand();
-            sqlite_cmd.CommandText = "SELECT [servername],[dbname],[sapuser],[sappass],[sqltype]" +
+            sqlite_cmd.CommandText = "SELECT [servername],[dbname],[sapuser],[sappass],[sqltype],[dbId],[dbPass]" +
                 "from[Connection]; ";
 
             sqlite_datareader = sqlite_cmd.ExecuteReader();
@@ -79,7 +80,9 @@ namespace LiberB1Sync.Class
 
                 oCompany.UserName = sqlite_datareader.GetString(2);
                 oCompany.Password = Cryptography.Decrypt(sqlite_datareader.GetString(3), key);
-                oCompany.UseTrusted = true;
+                oCompany.UseTrusted = false;
+                oCompany.DbUserName = sqlite_datareader.GetString(5);
+                oCompany.DbPassword = Cryptography.Decrypt(sqlite_datareader.GetString(6), key);
 
                 myconn.Close();
 
@@ -88,22 +91,14 @@ namespace LiberB1Sync.Class
                 if (retCode != 0)
                 {
                     strMsg = oCompany.GetLastErrorDescription();
-                    MessageBox.Show(strMsg);
+                    MyLogger.Log("Não Conectado, verifique as configurações de conexão");
+                    this.connect = false;
                 }
-
-                MyLogger.Log("SAP Conectado!");
-
-                //lendo outros parametros
-                //sqlite_cmd = myconn.CreateCommand();
-                //sqlite_cmd.CommandText = "SELECT [Id],[QueueName],[OriginDoc],[TimeSAP],[FieldChaveAcesso],[TimeStartSAP],[TimeStopSAP],[Import]"+
-                //                           "FROM[Configuration];";
-
-                //sqlite_datareader = sqlite_cmd.ExecuteReader();
-                //sqlite_datareader.Read();
-
-                //MessageBox.Show(sqlite_datareader.GetString(7));
-
-
+                else
+                {
+                    MyLogger.Log("SAP Conectado!");
+                    this.connect = true;
+                }
             }
             catch (Exception ex)
             {
@@ -207,70 +202,8 @@ namespace LiberB1Sync.Class
 
 
                 String query = "";
-                query = query + "SELECT DISTINCT " + "\n";
-                query = query + "	REPLACE(REPLACE(REPLACE ( T9.cnpjFornecedor , '.' , '' ), '/',''),'-','') as id, " + "\n";
-                query = query + "	t9.type id_type, " + "\n";
-                query = query + "	T2.[CardName] legal_name, " + "\n";
-                query = query + "	t2.E_Mail as email, " + "\n";
-                query = query + "	t2.Phone1 + ' - ' + t2.Phone2 + ' - ' +t2.Cellular as phone, " + "\n";
-                query = query + "	t2.CardCode, " + "\n";
-                query = query + "	T1.[BalDueCred]  - ISNULL( " + "\n";
-                query = query + "	(SELECT SUM(TT7.WTAMNT/ISNULL(TT8.INSTNUM,1)) " + "\n";
-                query = query + "		 FROM JDT1 TT1 " + "\n";
-                query = query + "		 INNER JOIN OCRD TT2 ON TT1.ShortName = TT2.CardCode " + "\n";
-                query = query + "		 LEFT JOIN VPM2 TT3 ON TT1.TransId = TT3.DocNum AND TT3.InvType = 18 " + "\n";
-                query = query + "		 INNER JOIN OPCH TT6 ON TT1.SOURCEID = TT6.DOCNUM AND ( TT1.[TransType] <> 204 and TT1.[TransType] <> 30) " + "\n";
-                query = query + "		 INNER JOIN PCH5 TT7 ON TT7.ABSENTRY = TT6.DOCENTRY AND ( TT1.[TransType] <> 204 and TT1.[TransType] <> 30) " + "\n";
-                query = query + "		 INNER JOIN OCTG TT8 ON TT8.GROUPNUM = TT6.GROUPNUM  AND ( TT1.[TransType] <> 204 and TT1.[TransType] <> 30) " + "\n";
-                query = query + "		 WHERE Substring(TT1.[ShortName],1,1) = 'F' " + "\n";
-                query = query + "		 AND (TT1.[TransType] = 30 or TT1.[TransType]=18 or TT1.[TransType]=204) " + "\n";
-                query = query + "		 AND SUBSTRING (TT1.[Account] ,1,1)= '2' " + "\n";
-                query = query + "		 AND TT1.[Credit]> 0 " + "\n";
-                query = query + "		 AND TT1.BALDUECRED <>0 " + "\n";
-                query = query + "		 AND TT1.[ShortName] = T1.[ShortName] " + "\n";
-                query = query + "		 AND TT1.[TransType] = T1.[TransType] " + "\n";
-                query = query + "		 AND  TT1.[TransId]= T1.[TransId] " + "\n";
-                query = query + "		 AND TT7.[Category] = 'P' " + "\n";
-                query = query + "		 --AND TT1.[DueDate]>= @dtin and TT1.[DueDate]<= @dtfi " + "\n";
-                query = query + "	)/(ISNULL(T8.INSTNUM,1)),0)  as value, " + "\n";
-                query = query + "	T1.[Credit] as original_value, " + "\n";
-                query = query + "	substring(CONVERT(varchar,T1.[DueDate],126),0,11) AS due_date, " + "\n";
-                query = query + "	substring(CONVERT(varchar,t1.refdate ,126),0,11) as issue_date, " + "\n";
-                query = query + "	T6.Serial as tax_doc_id, " + "\n";
-                query = query + "	t6.SeriesStr as tax_doc_sec_id, " + "\n";
-                query = query + "	isnull(t6.U_chaveacesso,'') as tax_doc_key, " + "\n";
-                query = query + "	[Ref3Line] installment, " + "\n";
-                query = query + "	(select top 1 isnull(c1.ISOCurrCod,(select top 1 z1.ISOCurrCod from OADM z0 left join OCRN z1 on z0.SysCurrncy = z1.CurrCode)) " + "\n";
-                query = query + "		from JDT1 C0 left join OCRN C1 on c0.FCCurrency = c1.CurrCode ) as currency, " + "\n";
-                query = query + "	t1.TransId, " + "\n";
-                query = query + "	t1.Line_ID, " + "\n";
-                query = query + "	case when (t1.U_lb_release = 1) then 'true' else 'false' end as release " + "\n";
-                query = query + "	--'lastchange' as lastchange  " + "\n";
-                query = query + " " + "\n";
-                query = query + "	FROM JDT1 T1 " + "\n";
-                query = query + "	INNER JOIN OCRD T2 ON T1.ShortName = T2.CardCode " + "\n";
-                query = query + "	LEFT JOIN VPM2 T3 ON T1.TransId = T3.DocNum AND (T3.InvType <> 30 and T3.InvType <> 18  and T3.InvType <> 204 ) " + "\n";
-                query = query + "	LEFT JOIN OPCH T6 ON T1.SOURCEID = T6.DocEntry AND ( T1.[TransType] <> 204 and T1.[TransType] <> 30) " + "\n";
-                query = query + "	LEFT JOIN PCH5 T7 ON T7.ABSENTRY = T6.DOCENTRY AND ( T1.[TransType] <> 204 and T1.[TransType] <> 30) " + "\n";
-                query = query + "	LEFT JOIN OCTG T8 ON T8.GROUPNUM = T6.GROUPNUM  AND ( T1.[TransType] <> 204 and T1.[TransType] <> 30) " + "\n";
-                query = query + "	LEFT JOIN (SELECT max( ISNULL (T0.TaxId0 , T0.TaxId4) ) as cnpjFornecedor ,T0.CARDCODE, case when T0.TaxId0 is not null then 'CNPJ' else 'CPF' end as type " + "\n";
-                query = query + "				FROM CRD7 T0 " + "\n";
-                query = query + "				where t0.CardCode like 'F%' and (T0.TaxId0 is not null or T0.TaxId4 is not null) " + "\n";
-                query = query + "				GROUP BY T0.CARDCODE, T0.TaxId0) as T9 ON T9.CARDCODE = T2.CardCode " + "\n";
-                query = query + " " + "\n";
-                query = query + "	WHERE " + "\n";
-                query = query + "	--(T9.cnpjFornecedor IS NOT NULL AND T9.cnpjFornecedor !='') AND  " + "\n";
-                query = query + "	Substring(T1.[ShortName],1,1) = 'F' " + "\n";
-                query = query + "	AND T1.[TransType]=18 " + "\n";
-                query = query + "	AND SUBSTRING (T1.[Account] ,1,1)= '2' " + "\n";
-                query = query + "	AND T1.[Credit]> 0 " + "\n";
-                query = query + "	AND T1.BALDUECRED <>0 " + "\n";
-                query = query + "	--AND T1.[DueDate] between @dtin AND @dtfi " + "\n";
-                query = query + "	--and t1.TransId = 221672 " + "\n";
-                query = query + " " + "\n";
-                query = query + "	--ORDER BY emailContatoFornecedor " + "\n";
-                query = query + "	--ORDER BY DueDater";
-
+                query = query + "select * from dbo.[LB_titulos]";
+               
                 oRecordset.DoQuery(query);
 
                 List<TitulosSAP> titulos = new List<TitulosSAP>();
@@ -374,20 +307,18 @@ namespace LiberB1Sync.Class
                 json = "{\"batch\": \"" + System.Guid.NewGuid() + "\", \"invoices\":" + invoice + "}";
 
 
-                //System.IO.File.WriteAllText(@"D:\path.txt", json);
-
-                LiberRabbit rabbitsend = new LiberRabbit();
-                rabbitsend.Connect();
-
+                System.IO.File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\LiberB1\\path.txt", json);
+               
                 oCompany.Disconnect();
                 MyLogger.Log("Usuário SAP desconectado.");
                 //escrever: SAP desconectador usuário "++"desconectado
-
+                LiberRabbit rabbitsend = new LiberRabbit();
+                rabbitsend.Connect();
+                rabbitsend.WriteJson(json, "invoice.batch.imported");
 
 
                 MyLogger.Log("Escrito na fila");
 
-                rabbitsend.WriteJson(json);
                 return true;
 
                 //IConnection connrabbit = CreateConnection(new ConnectionFactory());

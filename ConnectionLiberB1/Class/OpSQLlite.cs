@@ -25,7 +25,7 @@ namespace ConnectionLiberB1.Class
                 myconn.Open();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 MessageBox.Show("Mensagem 901 - Nenhuma Conexão configurada. Criar nova conexão.");
@@ -146,7 +146,7 @@ namespace ConnectionLiberB1.Class
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error 502 - " + ex.Message);
+                    MessageBox.Show("Error 510 - " + ex.Message);
                 }
             }
         }

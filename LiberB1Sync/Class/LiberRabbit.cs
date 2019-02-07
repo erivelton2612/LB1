@@ -65,7 +65,6 @@ namespace LiberB1Sync.Class
             ConnectionFactory factory = new ConnectionFactory
             {
                 UserName = LiberUser,
-                //Password = LiberPass,
                 Password = LiberPass,
                 VirtualHost = "/",
                 Port = System.Convert.ToInt32(LiberPort),
@@ -97,13 +96,12 @@ namespace LiberB1Sync.Class
 
         }
 
-        public bool WriteJson(String json)
+        public bool WriteJson(String json, String routingKey)
         {
             String queueName = extName + ".input";
             try
             {
-                return WriteMessageOnQueue(json, queueName, conn);
-
+                return WriteMessageOnQueue(json, queueName, conn, routingKey);
             }
             catch (Exception ex)
             {
@@ -118,16 +116,15 @@ namespace LiberB1Sync.Class
             return connectionFactory.CreateConnection();
         }
 
-        public bool WriteMessageOnQueue(string message, string queueName, IConnection connection)
+        public bool WriteMessageOnQueue(string message, string queueName, IConnection connection, String routingKey)
         {
             try
             {
-
                 using (var channel = connection.CreateModel())
                 {
                     ///trocar casale.input para queueName
                     //channel.ExchangeDeclare("casale.input", "fanout");
-                    channel.BasicPublish(queueName, "", null, Encoding.ASCII.GetBytes(message));
+                    channel.BasicPublish(queueName, routingKey, null, Encoding.ASCII.GetBytes(message));
                 }
 
 
@@ -173,10 +170,10 @@ namespace LiberB1Sync.Class
 
                     json = Encoding.UTF8.GetString(body);
                     // acknowledge receipt of the message
+                    MessageBox.Show(json);
                     channel.BasicAck(result.DeliveryTag, false);
                     MessageBox.Show(json);
                     MyLogger.Log("Uma mensagem lida");
-
 
                     channel.Close();
                     return json;
@@ -186,7 +183,7 @@ namespace LiberB1Sync.Class
             catch (Exception ex)
             {
                 MyLogger.Log("Erro 409 - Falha na conexao ou busca do titulo - " + ex.Message);
-                MessageBox.Show("erro 409 - " + ex.Message);
+                MessageBox.Show("erro 409 - Falha na conexao ou busca do titulo - " + ex.Message);
                 return String.Empty;
                     
             }
@@ -197,8 +194,6 @@ namespace LiberB1Sync.Class
             // "2017-12-04");
 
             //request = JsonTextReader(new StringReader(json));
-
-
         }
     }
 }

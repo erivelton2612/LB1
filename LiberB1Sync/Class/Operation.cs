@@ -21,8 +21,12 @@ namespace LiberB1Sync.Class
             MyLogger.Log("Conectando no SAP...");
 
             sap = new SAP();
-            
-            sap.ExportPayments();
+            if (sap.connect == true)
+            {
+                sap.ExportPayments();
+            }
+
+            MyLogger.Log("------------------------------------------------------------------------------------------------");
             MyLogger.Log("Aguardando novas iterações..." + Environment.NewLine);
                
             

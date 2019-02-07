@@ -20,9 +20,9 @@ namespace LiberB1Sync.Class
             MyLogger.Log("Liber está enviando informações...");
 
             LiberRabbit listen = new LiberRabbit();
-
+            listen.Connect();
+            
             String req;
-
             
             do
             {

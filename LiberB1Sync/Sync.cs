@@ -29,9 +29,39 @@ namespace LiberB1Sync
         {
             notifyIcon1.BalloonTipText = "Application minimized";
             notifyIcon1.BalloonTipTitle = "Liber B1 Sync";
-            cfg = new Configuration();
-            if (cfg.TimeSAP < 2) timer1.Enabled = false; else timer1.Interval = cfg.TimeSAP * 60 * 1000;
-            //MessageBox.Show(timer1.Interval.ToString() + "milissegundos!");
+            //verificar se há conexao
+            connSAPLiber = new Connection();
+            if (!connSAPLiber.hasConn)
+            {
+                button1.Enabled = false;
+                button2.Enabled = false;
+                toolStripStatusLabel3.BackColor = Color.Red;
+                toolStripStatusLabel3.Text = "Sem Conexão.";
+                label1TimeSAP.Text = "Temporizador não configurado";
+                label3.Text = "";
+            }
+            else
+            {
+                toolStripStatusLabel3.BackColor = Color.Green;
+                toolStripStatusLabel3.Text = "Com conexão.";
+                cfg = new Configuration();
+                if (cfg.hasConfig == true)
+                {
+                    if (cfg.TimeSAP < 2) timer1.Enabled = false; else timer1.Interval = cfg.TimeSAP * 60 * 1000;
+
+                    timer1.Start();
+                    DateTime otherDate = DateTime.Now.AddMilliseconds(cfg.TimeSAP * 60 * 1000);
+                    label1TimeSAP.Text = otherDate.ToLongTimeString();
+
+                    DateTime otherDate2 = DateTime.Now.AddMilliseconds(cfg.TimeSAP * 60 * 1000);
+                    label3.Text = otherDate2.ToLongTimeString();
+                }
+                else
+                {
+                    label1TimeSAP.Text = "Temporizador não configurado";
+                    label3.Text = "";
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -41,6 +71,7 @@ namespace LiberB1Sync
             //rtrn = lr.Connect();
             //textResult.Text = "Iniciando Sincronização..."+Environment.NewLine;
             button1.Enabled = false;
+            toolStripStatusLabel1.BackColor = Color.Green;
             
             textResult.Refresh();
             new Operation();
@@ -49,6 +80,7 @@ namespace LiberB1Sync
             button1.Enabled = true;
             textResult.Refresh();
             button1.Refresh();
+            toolStripStatusLabel1.BackColor = Control.DefaultBackColor;
         }
 
         void MyLogger_LogAdded(object sender, EventArgs e)
@@ -80,6 +112,7 @@ namespace LiberB1Sync
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            
             //MessageBox.Show("Mensagem temporal");
             button1.Enabled = false;
 
@@ -90,6 +123,11 @@ namespace LiberB1Sync
             button1.Enabled = true;
             textResult.Refresh();
             button1.Refresh();
+
+
+            label1TimeSAP.Text = DateTime.Now.ToLongTimeString();
+            timer1.Start();
+
         }
 
         private void Sync_Resize(object sender, EventArgs e)
@@ -119,7 +157,9 @@ namespace LiberB1Sync
 
         private void button2_Click(object sender, EventArgs e)
         {
+            toolStripStatusLabel2.BackColor = Color.Green;
             new Request();
+            toolStripStatusLabel2.BackColor = Control.DefaultBackColor; 
         }
 
         private void timer2_Tick(object sender, EventArgs e)

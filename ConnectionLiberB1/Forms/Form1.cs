@@ -107,7 +107,7 @@ namespace ConnectionLiberB1.Forms
             {
                 oCompany = new SAPbobsCOM.Company();
                 oCompany.Server = textBoxServerName.Text;
-                oCompany.LicenseServer = textBoxServerName.Text;
+                //oCompany.LicenseServer = textBoxServerName.Text;
                 oCompany.CompanyDB = textBoxDBName.Text;
                 oCompany.language = SAPbobsCOM.BoSuppLangs.ln_English;
                 oCompany.UseTrusted = false;
@@ -149,7 +149,7 @@ namespace ConnectionLiberB1.Forms
 
                 oCompany.UserName = textBoxSAPUser.Text;
                 oCompany.Password = textBoxSAPPass.Text;
-                oCompany.UseTrusted = true;
+                oCompany.UseTrusted = false;
 
                 retCode = oCompany.Connect();
 

@@ -19,6 +19,7 @@ namespace LiberB1Sync.Class
         public String TimeStopSAP { get; set; }
         private int? timesap;
         private bool hascfg;
+        public bool hasConfig { get; set; }
 
         private bool? import;
         
@@ -36,9 +37,10 @@ namespace LiberB1Sync.Class
             }
             catch (Exception ex)
             {
-
                 MyLogger.Log("Error 502 - " + ex.Message);
                 MessageBox.Show("Error 502 - " + ex.Message);
+                hascfg = false;
+                return;
             }
 
             sqlite_cmd = myconn.CreateCommand();
