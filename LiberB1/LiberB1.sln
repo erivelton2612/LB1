@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionLiberB1", "ConnectionLiberB1\ConnectionLiberB1.csproj", "{4061EAD5-4480-4160-B000-EDD4DEEE6200}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiberB1Sync", "LiberB1Sync\LiberB1Sync.csproj", "{990624C8-E99E-4574-A065-8B36143C5457}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{990624C8-E99E-4574-A065-8B36143C5457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{990624C8-E99E-4574-A065-8B36143C5457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{990624C8-E99E-4574-A065-8B36143C5457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{990624C8-E99E-4574-A065-8B36143C5457}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B707B116-431F-42F2-B673-8F9DF05AF346}
+	EndGlobalSection
+EndGlobal
