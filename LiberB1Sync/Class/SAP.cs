@@ -40,6 +40,7 @@ namespace LiberB1Sync.Class
             {
                 MyLogger.Log("Error 509 - " + ex.Message);
                 MessageBox.Show("Error 509 - " + ex.Message);
+                return;
             }
 
             sqlite_cmd = myconn.CreateCommand();
@@ -173,7 +174,9 @@ namespace LiberB1Sync.Class
                 {
                     // alterar para status negociado
                     MyLogger.Log("A parcela " + lineId + " do título " + transId + " está negociada com sucesso!");
-                    oJouLine.UserFields.Fields.Item("U_LB_release").Value = "1";
+                    oJouLine.UserFields.Fields.Item("U_LB_release").Value = "2";
+                    //campo para atualizar os dados de pagamento
+                    //oJouLine.UserFields.Fields.Item().Value = ;
                     intretcode = oJou.Update();
                     if (intretcode != 0)
                     {
@@ -181,10 +184,14 @@ namespace LiberB1Sync.Class
 
                     }
                 }
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(oJou);
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(oJouLine);
             }
             catch (Exception ex)
             {
                 MyLogger.Log("Erro 5034 -" + ex.Message);
+
             }
 
 
@@ -297,9 +304,6 @@ namespace LiberB1Sync.Class
 
                     oRecordset.MoveNext();
                 }
-
-
-
 
                 String invoice = JsonConvert.SerializeObject(titulos, Formatting.Indented);
 

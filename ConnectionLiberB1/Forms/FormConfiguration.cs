@@ -30,6 +30,9 @@ namespace ConnectionLiberB1.Forms
                         System.Convert.ToInt32(textBoxTimeSAP.Text), textBoxFieldKey.Text,
                         textBoxTimeStart.Text, textBoxTimeEnd.Text, checkImport.Checked
                         );
+
+            MessageBox.Show("Reinicie a aplicação para aplicar as modificações");
+
         }
 
         private void FormConfiguration_Load(object sender, EventArgs e)

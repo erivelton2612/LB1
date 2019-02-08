@@ -11,12 +11,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ConnectionLiberB1;
+using ConnectionLiberB1.Class;
 
 namespace LiberB1Sync
 {
     public partial class Sync : Form
     {
         Configuration cfg;
+        Connection connSAPLiber;
 
         public Sync()
         {
@@ -30,22 +32,29 @@ namespace LiberB1Sync
             notifyIcon1.BalloonTipText = "Application minimized";
             notifyIcon1.BalloonTipTitle = "Liber B1 Sync";
             //verificar se há conexao
+            OpSQLlite sQLlite = new OpSQLlite();
+
+            //verifica se existe connexao
             connSAPLiber = new Connection();
-            if (!connSAPLiber.hasConn)
+            //if (!connSAPLiber.hasConn)
+            if(!sQLlite.ExistConn())
             {
                 button1.Enabled = false;
                 button2.Enabled = false;
                 toolStripStatusLabel3.BackColor = Color.Red;
                 toolStripStatusLabel3.Text = "Sem Conexão.";
                 label1TimeSAP.Text = "Temporizador não configurado";
+                label1.Text = "";
+                label2.Text = "";
                 label3.Text = "";
             }
             else
             {
                 toolStripStatusLabel3.BackColor = Color.Green;
-                toolStripStatusLabel3.Text = "Com conexão.";
+                toolStripStatusLabel3.Text = "Conectado.";
+                //verifica se existe configuração
                 cfg = new Configuration();
-                if (cfg.hasConfig == true)
+                if (sQLlite.ExistConf())
                 {
                     if (cfg.TimeSAP < 2) timer1.Enabled = false; else timer1.Interval = cfg.TimeSAP * 60 * 1000;
 
@@ -81,6 +90,7 @@ namespace LiberB1Sync
             textResult.Refresh();
             button1.Refresh();
             toolStripStatusLabel1.BackColor = Control.DefaultBackColor;
+            this.Refresh();
         }
 
         void MyLogger_LogAdded(object sender, EventArgs e)
@@ -103,6 +113,7 @@ namespace LiberB1Sync
         private void configuraçõesGeraisToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new ConnectionLiberB1.Forms.FormConfiguration().Show();
+            this.Refresh();
         }
 
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
@@ -159,7 +170,8 @@ namespace LiberB1Sync
         {
             toolStripStatusLabel2.BackColor = Color.Green;
             new Request();
-            toolStripStatusLabel2.BackColor = Control.DefaultBackColor; 
+            toolStripStatusLabel2.BackColor = Control.DefaultBackColor;
+            this.Refresh();
         }
 
         private void timer2_Tick(object sender, EventArgs e)

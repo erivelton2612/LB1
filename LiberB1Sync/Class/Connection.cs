@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SQLite;
+using System.Windows.Forms;
 
 namespace LiberB1Sync.Class
 {
@@ -14,11 +16,13 @@ namespace LiberB1Sync.Class
 
         public Connection()
         {
+
             SQLiteCommand sqlite_cmd;
             SQLiteDataReader sqlite_datareader;
 
             try
             {
+
                 String path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 myconn = new SQLiteConnection("DataSource=" + path + "\\LiberB1\\LiberB1DB.db;");
                 myconn.Open();
@@ -38,13 +42,15 @@ namespace LiberB1Sync.Class
                     hasConn = false;
                 }
 
-                myconn.close();
+                sqlite_datareader.Close();
+                myconn.Close();
             }
             catch (Exception ex)
             {
                 MyLogger.Log("Error 502 - " + ex.Message);
                 MessageBox.Show("Error 502 - " + ex.Message);
                 hasConn = false;
+                myconn.Close();
                 return;
             }
         }

@@ -7,10 +7,11 @@ using System.Data.SQLite;
 using System.Windows.Forms;
 using Utils.Encrypt;
 using ConnectionLiberB1.Class;
+using System.IO;
 
 namespace ConnectionLiberB1.Class
 {
-    class OpSQLlite
+    public class OpSQLlite
     {
         private SQLiteConnection myconn;
         String key = "trugLk";
@@ -21,21 +22,112 @@ namespace ConnectionLiberB1.Class
             String path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             try
             {
-                myconn = new SQLiteConnection("DataSource=" + path + "\\LiberB1\\LiberB1DB.db;");
-                myconn.Open();
+                if(System.IO.File.Exists(path + "\\LiberB1\\LiberB1DB.db"))
+                {
+
+                    myconn = new SQLiteConnection("DataSource=" + path + "\\LiberB1\\LiberB1DB.db;");
+                    myconn.Open();
+                }
+                else
+                {
+                    MessageBox.Show("Mensagem 901 - Nenhuma Conexão configurada. Criar nova conexão.");
+                    //implementar aqui um create database para o caso do banco nao existir ainda.
+                    //criando nova conexão
+                    CreateDatabase();
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex )
             {
 
-                MessageBox.Show("Mensagem 901 - Nenhuma Conexão configurada. Criar nova conexão.");
+                MessageBox.Show("Mensagem 901 - "+ ex.Message);
                 //implementar aqui um create database para o caso do banco nao existir ainda.
                 //criando nova conexão
 
             }
-
         }
 
+        private void CreateDatabase()
+        {
+            String path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            SQLiteConnection.CreateFile(path + "\\LiberB1\\LiberB1DB.db;");
+
+            using (myconn = new SQLiteConnection("DataSource=" + path + "\\LiberB1\\LiberB1DB.db;"))
+            {
+                try
+                {
+                    myconn.Open();
+
+                    StringBuilder varname1 = new StringBuilder();
+                    varname1.Append("SELECT 1;");
+                    SQLiteCommand command = new SQLiteCommand(varname1.ToString(), myconn);
+                    command.ExecuteNonQuery();
+
+                    StringBuilder varname11 = new StringBuilder();
+                    varname11.Append("PRAGMA foreign_keys=OFF;");
+                    command = new SQLiteCommand(varname11.ToString(), myconn);
+                    command.ExecuteNonQuery();
+
+
+                    StringBuilder varname12 = new StringBuilder();
+                    varname12.Append("BEGIN TRANSACTION;");
+                    command = new SQLiteCommand(varname12.ToString(), myconn);
+                    command.ExecuteNonQuery();
+
+
+
+                    StringBuilder varname13 = new StringBuilder();
+                    varname13.Append("CREATE TABLE [Connection] ( \n");
+                    varname13.Append("  [Id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL \n");
+                    varname13.Append(", [serverName] text NOT NULL \n");
+                    varname13.Append(", [dbName] text NOT NULL \n");
+                    varname13.Append(", [dbPass] text NOT NULL \n");
+                    varname13.Append(", [SapUser] text NOT NULL \n");
+                    varname13.Append(", [SapPass] text NOT NULL \n");
+                    varname13.Append(", [IsValid] image DEFAULT 0 NOT NULL \n");
+                    varname13.Append(", [ConexaoLiber] text DEFAULT 'https:\\\\staging.edi.libercapital.com.br' NOT NULL \n");
+                    varname13.Append(", [userLiber] text NOT NULL \n");
+                    varname13.Append(", [PassLiber] text NOT NULL \n");
+                    varname13.Append(", [dbId] text DEFAULT sa NULL \n");
+                    varname13.Append(", [PortLiber] text DEFAULT '5672' NOT NULL \n");
+                    varname13.Append(", [SQLType] text DEFAULT dst_MSSQL2016 NOT NULL);");
+                    command = new SQLiteCommand(varname13.ToString(), myconn);
+                    command.ExecuteNonQuery();
+
+                    StringBuilder varname22 = new StringBuilder();
+                    varname22.Append("CREATE TABLE [Configuration] ( \n");
+                    varname22.Append("  [Id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL \n");
+                    varname22.Append(", [QueueName] text NOT NULL \n");
+                    varname22.Append(", [OriginDoc] text NULL \n");
+                    varname22.Append(", [TimeSAP] bigint NULL \n");
+                    varname22.Append(", [FieldChaveAcesso] text NOT NULL \n");
+                    varname22.Append(", [TimeStartSAP] text NULL \n");
+                    varname22.Append(", [TimeStopSAP] text NULL \n");
+                    varname22.Append(", [Import] int DEFAULT false NOT NULL \n");
+                    varname22.Append(");");
+                    command = new SQLiteCommand(varname22.ToString(), myconn);
+                    command.ExecuteNonQuery();
+
+                    StringBuilder varname23 = new StringBuilder();
+                    varname23.Append("CREATE TABLE [Access] ([Id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL");
+                    varname23.Append(", [LastTimeSAP] text NOT NULL, [LastTimeLiber] text NOT NULL);");
+                    command = new SQLiteCommand(varname23.ToString(), myconn);
+                    command.ExecuteNonQuery();
+
+                    StringBuilder varname16 = new StringBuilder();
+                    varname16.Append("COMMIT;");
+                    command = new SQLiteCommand(varname16.ToString(), myconn);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro 5235 - Erro ao Criar base de dados - " + ex.Message);
+                    
+                }
+               
+
+            }
+        }
 
         internal string Getconnection(int field)
         {

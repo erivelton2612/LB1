@@ -89,7 +89,7 @@
             // textBoxServerName
             // 
             this.textBoxServerName.Location = new System.Drawing.Point(103, 28);
-            this.textBoxServerName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxServerName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxServerName.Name = "textBoxServerName";
             this.textBoxServerName.Size = new System.Drawing.Size(138, 20);
             this.textBoxServerName.TabIndex = 1;
@@ -107,7 +107,7 @@
             // textBoxDBName
             // 
             this.textBoxDBName.Location = new System.Drawing.Point(103, 55);
-            this.textBoxDBName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDBName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDBName.Name = "textBoxDBName";
             this.textBoxDBName.Size = new System.Drawing.Size(138, 20);
             this.textBoxDBName.TabIndex = 2;
@@ -125,7 +125,7 @@
             // textBoxSAPUser
             // 
             this.textBoxSAPUser.Location = new System.Drawing.Point(103, 138);
-            this.textBoxSAPUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxSAPUser.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxSAPUser.Name = "textBoxSAPUser";
             this.textBoxSAPUser.Size = new System.Drawing.Size(138, 20);
             this.textBoxSAPUser.TabIndex = 5;
@@ -144,7 +144,7 @@
             // textBoxSAPPass
             // 
             this.textBoxSAPPass.Location = new System.Drawing.Point(103, 166);
-            this.textBoxSAPPass.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxSAPPass.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxSAPPass.Name = "textBoxSAPPass";
             this.textBoxSAPPass.PasswordChar = '*';
             this.textBoxSAPPass.Size = new System.Drawing.Size(138, 20);
@@ -169,9 +169,9 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Location = new System.Drawing.Point(16, 86);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(413, 188);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
@@ -188,7 +188,7 @@
             "dst_MSSQL2016",
             "dst_MSSQL2017"});
             this.comboBox1.Location = new System.Drawing.Point(299, 54);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(104, 21);
             this.comboBox1.TabIndex = 10;
@@ -216,7 +216,7 @@
             // textBoxDBID
             // 
             this.textBoxDBID.Location = new System.Drawing.Point(103, 83);
-            this.textBoxDBID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDBID.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDBID.Name = "textBoxDBID";
             this.textBoxDBID.Size = new System.Drawing.Size(138, 20);
             this.textBoxDBID.TabIndex = 3;
@@ -225,7 +225,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(284, 108);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 46);
             this.button1.TabIndex = 7;
@@ -256,7 +256,7 @@
             // textBoxDBPass
             // 
             this.textBoxDBPass.Location = new System.Drawing.Point(103, 110);
-            this.textBoxDBPass.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDBPass.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDBPass.Name = "textBoxDBPass";
             this.textBoxDBPass.PasswordChar = '*';
             this.textBoxDBPass.Size = new System.Drawing.Size(138, 20);
@@ -275,9 +275,9 @@
             this.groupBox2.Controls.Add(this.textBoxLiberUser);
             this.groupBox2.Controls.Add(this.textBoxLiberEnd);
             this.groupBox2.Location = new System.Drawing.Point(16, 279);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(413, 122);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
@@ -296,7 +296,7 @@
             // textBoxPassLiber
             // 
             this.textBoxPassLiber.Location = new System.Drawing.Point(103, 98);
-            this.textBoxPassLiber.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxPassLiber.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxPassLiber.Name = "textBoxPassLiber";
             this.textBoxPassLiber.PasswordChar = '*';
             this.textBoxPassLiber.Size = new System.Drawing.Size(138, 20);
@@ -324,7 +324,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(284, 20);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(116, 46);
             this.button2.TabIndex = 12;
@@ -355,7 +355,7 @@
             // textBoxLiberPort
             // 
             this.textBoxLiberPort.Location = new System.Drawing.Point(103, 44);
-            this.textBoxLiberPort.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxLiberPort.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLiberPort.Name = "textBoxLiberPort";
             this.textBoxLiberPort.Size = new System.Drawing.Size(50, 20);
             this.textBoxLiberPort.TabIndex = 9;
@@ -364,7 +364,7 @@
             // textBoxLiberUser
             // 
             this.textBoxLiberUser.Location = new System.Drawing.Point(103, 71);
-            this.textBoxLiberUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxLiberUser.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLiberUser.Name = "textBoxLiberUser";
             this.textBoxLiberUser.Size = new System.Drawing.Size(138, 20);
             this.textBoxLiberUser.TabIndex = 10;
@@ -372,7 +372,7 @@
             // textBoxLiberEnd
             // 
             this.textBoxLiberEnd.Location = new System.Drawing.Point(103, 17);
-            this.textBoxLiberEnd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxLiberEnd.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLiberEnd.Name = "textBoxLiberEnd";
             this.textBoxLiberEnd.Size = new System.Drawing.Size(168, 20);
             this.textBoxLiberEnd.TabIndex = 8;
@@ -380,18 +380,18 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(309, 426);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(110, 27);
             this.button3.TabIndex = 14;
-            this.button3.Text = "Fechar";
+            this.button3.Text = "Próximo";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(176, 426);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(110, 27);
             this.button4.TabIndex = 13;
@@ -403,7 +403,7 @@
             // 
             this.pictureBox2.Image = global::ConnectionLiberB1.Properties.Resources.b1_png;
             this.pictureBox2.Location = new System.Drawing.Point(292, 25);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(91, 58);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -414,7 +414,7 @@
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(36, 25);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(124, 58);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -478,7 +478,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "LiberB1 Connection";
             this.Load += new System.EventHandler(this.Form1_Load);

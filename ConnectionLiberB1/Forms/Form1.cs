@@ -72,7 +72,6 @@ namespace ConnectionLiberB1.Forms
                     textBoxSAPUser.Text, textBoxSAPPass.Text, textBoxLiberEnd.Text, textBoxLiberUser.Text, textBoxPassLiber.Text,
                     textBoxLiberPort.Text, comboBox1.Text);
                 conn.CloseConnection();
-                this.Close();
             }
             else
             {
@@ -85,7 +84,7 @@ namespace ConnectionLiberB1.Forms
         private void button3_Click_1(object sender, EventArgs e)
         {
             this.Close();
-
+            new FormConfiguration().Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
