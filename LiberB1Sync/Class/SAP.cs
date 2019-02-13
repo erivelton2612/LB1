@@ -153,39 +153,37 @@ namespace LiberB1Sync.Class
                     return;
                 }
                 oJouLine = oJou.Lines;
-
                 oJouLine.SetCurrentLine(lineId);
-                int a = DateTime.Compare(r.due_date, oJouLine.DueDate);
-                //if (String.Compare(r.due_date.ToShortDateString(), oJouLine.DueDate.ToShortDateString()) != 0)//verificar vencimento
-                if (a!=0)//verificar vencimento
+
+
+                if (r.due_date != oJouLine.DueDate)
                 {
                     MyLogger.Log("A parcela " + lineId + " do título " + transId + " não está com a mesma data de vencimento. O título não está aprovado para negociação");
                     r.Invalidate();
                 }
-                else if (r.value != oJouLine.Credit)//verificar valor do titulo
-                {
-                    MyLogger.Log("A parcela " + lineId + " do título " + transId + " não está com a mesma data de vencimento. O título não está aprovado para negociação");
-                    r.Invalidate();
-                }
-                //else if(1=1)//verificar se o titulo esta com o status confirmado --  não é necessario
-                //{
-                //   // oJouLine.UserFields.Fields.
-                //}
+                //verificar valor do titulo
                 else
                 {
-                    // alterar para status negociado
-                    MyLogger.Log("A parcela " + lineId + " do título " + transId + " está negociada com sucesso!");
-                    oJouLine.UserFields.Fields.Item("U_LB_release").Value = "2";
-                    //campo para atualizar os dados de pagamento
-                    //oJouLine.UserFields.Fields.Item().Value = ;
-                    intretcode = oJou.Update();
-                    if (intretcode != 0)
+                    if (r.value != oJouLine.Credit)
                     {
-                        MyLogger.Log(oCompany.GetLastErrorDescription());
+                        MyLogger.Log("A parcela " + lineId + " do título " + transId + " não está com a mesma data de vencimento. O título não está aprovado para negociação");
+                        r.Invalidate();
+                    }
+                    else
+                    {
+                        // alterar para status negociado
+                        MyLogger.Log("A parcela " + lineId + " do título " + transId + " está negociada com sucesso!");
+                        oJouLine.UserFields.Fields.Item("U_LB_release").Value = "2";
+                        //campo para atualizar os dados de pagamento
+                        //oJouLine.UserFields.Fields.Item().Value = ;
+                        intretcode = oJou.Update();
+                        if (intretcode != 0)
+                        {
+                            MyLogger.Log(oCompany.GetLastErrorDescription());
 
+                        }
                     }
                 }
-
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oJou);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oJouLine);
             }
@@ -194,7 +192,6 @@ namespace LiberB1Sync.Class
                 MyLogger.Log("Erro 5034 -" + ex.Message);
 
             }
-
 
         }
 
@@ -211,7 +208,7 @@ namespace LiberB1Sync.Class
 
                 String query = "";
                 query = query + "select * from dbo.[LB_titulos]";
-               
+
                 oRecordset.DoQuery(query);
 
                 List<TitulosSAP> titulos = new List<TitulosSAP>();
@@ -312,8 +309,8 @@ namespace LiberB1Sync.Class
                 json = "{\"batch\": \"" + System.Guid.NewGuid() + "\", \"invoices\":" + invoice + "}";
 
 
-                System.IO.File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\LiberB1\\path.txt", json);
-               
+                System.IO.File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\LiberB1\\path.txt", json);
+
                 oCompany.Disconnect();
                 MyLogger.Log("Usuário SAP desconectado.");
                 //escrever: SAP desconectador usuário "++"desconectado
