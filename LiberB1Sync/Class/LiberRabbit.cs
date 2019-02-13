@@ -170,9 +170,8 @@ namespace LiberB1Sync.Class
 
                     json = Encoding.UTF8.GetString(body);
                     // acknowledge receipt of the message
-                    MessageBox.Show(json);
                     channel.BasicAck(result.DeliveryTag, false);
-                    MessageBox.Show(json);
+
                     MyLogger.Log("Uma mensagem lida");
 
                     channel.Close();

@@ -7,20 +7,37 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionLiberB1", "Connec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiberB1Sync", "LiberB1Sync\LiberB1Sync.csproj", "{990624C8-E99E-4574-A065-8B36143C5457}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LB1_Install", "LB1_Install\LB1_Install.vdproj", "{21673E9B-60E8-4513-891D-383F2B029E07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Debug|x64.ActiveCfg = Debug|x64
+		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Debug|x64.Build.0 = Debug|x64
 		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Release|x64.ActiveCfg = Release|x64
+		{4061EAD5-4480-4160-B000-EDD4DEEE6200}.Release|x64.Build.0 = Release|x64
 		{990624C8-E99E-4574-A065-8B36143C5457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{990624C8-E99E-4574-A065-8B36143C5457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{990624C8-E99E-4574-A065-8B36143C5457}.Debug|x64.ActiveCfg = Debug|x64
+		{990624C8-E99E-4574-A065-8B36143C5457}.Debug|x64.Build.0 = Debug|x64
 		{990624C8-E99E-4574-A065-8B36143C5457}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{990624C8-E99E-4574-A065-8B36143C5457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{990624C8-E99E-4574-A065-8B36143C5457}.Release|x64.ActiveCfg = Release|x64
+		{990624C8-E99E-4574-A065-8B36143C5457}.Release|x64.Build.0 = Release|x64
+		{21673E9B-60E8-4513-891D-383F2B029E07}.Debug|Any CPU.ActiveCfg = Debug
+		{21673E9B-60E8-4513-891D-383F2B029E07}.Debug|x64.ActiveCfg = Debug
+		{21673E9B-60E8-4513-891D-383F2B029E07}.Release|Any CPU.ActiveCfg = Release
+		{21673E9B-60E8-4513-891D-383F2B029E07}.Release|x64.ActiveCfg = Release
+		{21673E9B-60E8-4513-891D-383F2B029E07}.Release|x64.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

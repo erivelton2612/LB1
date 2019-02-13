@@ -15,6 +15,7 @@ namespace LiberB1Sync.Class
 
         public Request()
         {
+
             MyLogger.Log("------------------------------------------------------------------------------------------------");
             MyLogger.Log(DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString());
             MyLogger.Log("Liber está enviando informações...");
@@ -61,9 +62,17 @@ namespace LiberB1Sync.Class
             }
             while (!String.IsNullOrEmpty(req));
 
-            SAP connSAP = new SAP();
-
-            connSAP.InvoiceRequested(requests);
+            if (requests.Count > 0)
+            {
+                SAP connSAP = new SAP();
+                connSAP.InvoiceRequested(requests);
+            }
+            else
+            {
+                MyLogger.Log("Sem títulos para atualizar");
+            }
+            MyLogger.Log("------------------------------------------------------------------------------------------------");
+            MyLogger.Log("Aguardando novas iterações...");
         }
     }
 }

@@ -155,8 +155,9 @@ namespace LiberB1Sync.Class
                 oJouLine = oJou.Lines;
 
                 oJouLine.SetCurrentLine(lineId);
-
-                if (String.Compare(r.due_date.ToShortDateString(), oJouLine.DueDate.ToShortDateString()) != 0)//verificar vencimento
+                int a = DateTime.Compare(r.due_date, oJouLine.DueDate);
+                //if (String.Compare(r.due_date.ToShortDateString(), oJouLine.DueDate.ToShortDateString()) != 0)//verificar vencimento
+                if (a!=0)//verificar vencimento
                 {
                     MyLogger.Log("A parcela " + lineId + " do título " + transId + " não está com a mesma data de vencimento. O título não está aprovado para negociação");
                     r.Invalidate();

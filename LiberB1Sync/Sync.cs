@@ -64,6 +64,8 @@ namespace LiberB1Sync
 
                     DateTime otherDate2 = DateTime.Now.AddMilliseconds(cfg.TimeSAP * 60 * 1000);
                     label3.Text = otherDate2.ToLongTimeString();
+                    MyLogger.Log("------------------------------------------------------------------------------------------------");
+                    MyLogger.Log("Aguardando novas iterações...");
                 }
                 else
                 {
