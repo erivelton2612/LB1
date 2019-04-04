@@ -12,7 +12,7 @@ namespace LiberB1Sync.Class
         public String payer_doc_id { get; set; }
         public double value { get; set; }
         public DateTime due_date { get; set; }
-        public bool valid ;
+        public bool valid { get; set; }
 
         public InvoiceRequest(
              String payer_doc_id,

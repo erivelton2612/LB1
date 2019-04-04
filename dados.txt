@@ -1,0 +1,4 @@
+edi.staging.libercapital.com.br
+USER: casale-dev
+PASS: rJjS6qFA6fjtp5n9
+EXCHANGE: casale.input

@@ -53,6 +53,7 @@ namespace LiberB1Sync
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -74,8 +75,9 @@ namespace LiberB1Sync
             this.textResult.Margin = new System.Windows.Forms.Padding(2);
             this.textResult.Multiline = true;
             this.textResult.Name = "textResult";
+            this.textResult.ReadOnly = true;
             this.textResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textResult.Size = new System.Drawing.Size(341, 344);
+            this.textResult.Size = new System.Drawing.Size(341, 330);
             this.textResult.TabIndex = 2;
             // 
             // menuStrip1
@@ -170,7 +172,6 @@ namespace LiberB1Sync
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(80, 17);
             this.toolStripStatusLabel1.Text = "Sincronização";
-            this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
             // 
             // toolStripStatusLabel2
             // 
@@ -199,6 +200,7 @@ namespace LiberB1Sync
             // 
             // timer2
             // 
+            this.timer2.Enabled = true;
             this.timer2.Interval = 600000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
@@ -238,11 +240,22 @@ namespace LiberB1Sync
             this.label3.TabIndex = 13;
             this.label3.Text = "16:00";
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(298, 507);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(69, 22);
+            this.button3.TabIndex = 15;
+            this.button3.Text = "Limpar";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Sync
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(399, 554);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -290,6 +303,7 @@ namespace LiberB1Sync
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.Button button3;
     }
 }
 

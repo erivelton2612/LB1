@@ -27,8 +27,7 @@ CREATE TABLE [Connection] (
 , [PassLiber] text NOT NULL
 , [dbId] text DEFAULT sa NULL
 , [PortLiber] text DEFAULT '5672' NOT NULL
-, [SQLType] text DEFAULT dst_MSSQL2016 NOT NULL
-);
+, [SQLType] text DEFAULT dst_MSSQL2016 NOT NULL);
 CREATE TABLE [Configuration] (
   [Id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
 , [QueueName] text NOT NULL
@@ -39,10 +38,7 @@ CREATE TABLE [Configuration] (
 , [TimeStopSAP] text NULL
 , [Import] int DEFAULT false NOT NULL
 );
-CREATE TABLE [Access] (
-  [Id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
-, [LastTimeSAP] text NOT NULL
-, [LastTimeLiber] text NOT NULL
-);
+CREATE TABLE [Access] ([Id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
+, [LastTimeSAP] text NOT NULL, [LastTimeLiber] text NOT NULL);
 COMMIT;
 

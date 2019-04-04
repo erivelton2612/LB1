@@ -62,7 +62,7 @@ namespace LiberB1Sync
                     DateTime otherDate = DateTime.Now.AddMilliseconds(cfg.TimeSAP * 60 * 1000);
                     label1TimeSAP.Text = otherDate.ToLongTimeString();
 
-                    DateTime otherDate2 = DateTime.Now.AddMilliseconds(cfg.TimeSAP * 60 * 1000);
+                    DateTime otherDate2 = DateTime.Now.AddMilliseconds(10 * 60 * 1000);
                     label3.Text = otherDate2.ToLongTimeString();
                     MyLogger.Log("------------------------------------------------------------------------------------------------");
                     MyLogger.Log("Aguardando novas iterações...");
@@ -141,6 +141,10 @@ namespace LiberB1Sync
             label1TimeSAP.Text = DateTime.Now.ToLongTimeString();
             timer1.Start();
 
+            DateTime otherDate = DateTime.Now.AddMilliseconds(cfg.TimeSAP * 60 * 1000);
+            label1TimeSAP.Text = otherDate.ToLongTimeString();
+
+
         }
 
         private void Sync_Resize(object sender, EventArgs e)
@@ -163,11 +167,6 @@ namespace LiberB1Sync
 
         }
 
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             toolStripStatusLabel2.BackColor = Color.Green;
@@ -178,7 +177,17 @@ namespace LiberB1Sync
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            toolStripStatusLabel2.BackColor = Color.Green;
             new Request();
+            toolStripStatusLabel2.BackColor = Control.DefaultBackColor;
+            DateTime otherDate2 = DateTime.Now.AddMilliseconds(10 * 60 * 1000);
+            label3.Text = otherDate2.ToLongTimeString();
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            textResult.Text = "";
         }
     }
 }

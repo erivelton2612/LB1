@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LiberB1Sync;
 using System.Globalization;
+using SAPbobsCOM;
 
 namespace LiberB1Sync.Class
 {
@@ -149,41 +150,39 @@ namespace LiberB1Sync.Class
                 if (!retcode)
                 {
                     MyLogger.Log("Erro ao encontrar titulo " + transId.ToString());
-                    MessageBox.Show("Erro ao encontrar titulo " + transId.ToString());
+                    //MessageBox.Show("Erro ao encontrar titulo " + transId.ToString());
                     return;
                 }
                 oJouLine = oJou.Lines;
                 oJouLine.SetCurrentLine(lineId);
 
-
-                if (r.due_date != oJouLine.DueDate)
+                VerificaDados(r, oJouLine, lineId, transId, oJou);
+                
+                ////verificar valor do titulo
+                ///
+                if (r.value != oJouLine.Credit)
                 {
-                    MyLogger.Log("A parcela " + lineId + " do título " + transId + " não está com a mesma data de vencimento. O título não está aprovado para negociação");
+                    MyLogger.Log("A parcela " + lineId + " do título " + transId + " não está com o mesmo valor do negociado. O título não está aprovado para negociação");
                     r.Invalidate();
                 }
-                //verificar valor do titulo
-                else
-                {
-                    if (r.value != oJouLine.Credit)
-                    {
-                        MyLogger.Log("A parcela " + lineId + " do título " + transId + " não está com a mesma data de vencimento. O título não está aprovado para negociação");
-                        r.Invalidate();
-                    }
-                    else
-                    {
-                        // alterar para status negociado
-                        MyLogger.Log("A parcela " + lineId + " do título " + transId + " está negociada com sucesso!");
-                        oJouLine.UserFields.Fields.Item("U_LB_release").Value = "2";
-                        //campo para atualizar os dados de pagamento
-                        //oJouLine.UserFields.Fields.Item().Value = ;
-                        intretcode = oJou.Update();
-                        if (intretcode != 0)
-                        {
-                            MyLogger.Log(oCompany.GetLastErrorDescription());
+                //neste momento deve-se comparar o valor do titulo que está no rabbit com o valor calculado descontando as devolucoes e também as conciliações
 
-                        }
+
+                if (r.valid)
+                {
+                    // alterar para status negociado
+                    MyLogger.Log("A parcela " + lineId + " do título " + transId + " está negociada com sucesso!");
+                    oJouLine.UserFields.Fields.Item("U_Lb_release").Value = "2";
+                    //campo para atualizar os dados de pagamento
+                    //oJouLine.UserFields.Fields.Item("U_LB_Observacao").Value =;
+                    intretcode = oJou.Update();
+                    if (intretcode != 0)
+                    {
+                        MyLogger.Log(oCompany.GetLastErrorDescription());
+
                     }
                 }
+                
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oJou);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oJouLine);
             }
@@ -192,6 +191,20 @@ namespace LiberB1Sync.Class
                 MyLogger.Log("Erro 5034 -" + ex.Message);
 
             }
+
+        }
+
+        private void VerificaDados(InvoiceRequest r, JournalEntries_Lines oJouLine, int lineId, int transId, JournalEntries oJou)
+        {
+            //if (DateTime.Compare( r.due_date, oJouLine.DueDate)!=0)
+
+            if (r.due_date.CompareTo(oJouLine.DueDate) != 0)
+            {
+                r.Invalidate();
+                MyLogger.Log("A parcela " + lineId + " do título " + transId + " não está com a mesma data de vencimento. O título não está aprovado para negociação");
+            }
+            ////verificar valor do titulo
+            ///
 
         }
 
@@ -303,7 +316,8 @@ namespace LiberB1Sync.Class
                     oRecordset.MoveNext();
                 }
 
-                String invoice = JsonConvert.SerializeObject(titulos, Formatting.Indented);
+                //String invoice = JsonConvert.SerializeObject(titulos, Formatting.Indented);
+                String invoice = JsonConvert.SerializeObject(titulos, Formatting.None); 
 
 
                 json = "{\"batch\": \"" + System.Guid.NewGuid() + "\", \"invoices\":" + invoice + "}";
@@ -313,7 +327,6 @@ namespace LiberB1Sync.Class
 
                 oCompany.Disconnect();
                 MyLogger.Log("Usuário SAP desconectado.");
-                //escrever: SAP desconectador usuário "++"desconectado
                 LiberRabbit rabbitsend = new LiberRabbit();
                 rabbitsend.Connect();
                 rabbitsend.WriteJson(json, "invoice.batch.imported");
@@ -322,19 +335,6 @@ namespace LiberB1Sync.Class
                 MyLogger.Log("Escrito na fila");
 
                 return true;
-
-                //IConnection connrabbit = CreateConnection(new ConnectionFactory());
-                //String queueName = extName + ".input";
-                //try
-                //{
-                //    return WriteMessageOnQueue(json, queueName, connrabbit);
-                //}
-                //catch (Exception ex )
-                //{
-                //    MessageBox.Show(ex.Message);
-                //    return false;
-                //}
-
             }
             catch (Exception ex)
             {
@@ -345,35 +345,6 @@ namespace LiberB1Sync.Class
         }
 
 
-
-        //public ConnectionFactory GetConnectionFactory()
-        //{
-        //    var connectionFactory = new ConnectionFactory
-        //    {
-        //        //HostName = ConexaoLiber,
-        //        //UserName = userLiber,
-        //        //Password = PassLiber
-        //        HostName = "edi.staging.libercapital.com.br",
-        //        UserName = "liber-dev",
-        //        Password = "trugLkvsZPjskaAu"
-        //    };
-        //    return connectionFactory;
-        //}
-
-        //public IConnection CreateConnection(ConnectionFactory connectionFactory)
-        //{
-        //    return connectionFactory.CreateConnection();
-        //}
-
-        //public bool WriteMessageOnQueue(string message, string queueName, IConnection connection)
-        //{
-        //    using (var channel = connection.CreateModel())
-        //    {
-        //        channel.BasicPublish(string.Empty, queueName, null, Encoding.ASCII.GetBytes(message));
-        //    }
-
-        //    return true;
-        //}
 
     }
 }
